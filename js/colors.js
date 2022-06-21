@@ -1,21 +1,22 @@
 const canvas = document.querySelector("#colors");
 const ctx = canvas.getContext("2d");
+const placeholder = document.querySelector("h1");
 
 setSize();
 
 addEventListener("resize", setSize);
 
 function setSize() {
-  canvas.height = innerHeight;
-  canvas.width = innerWidth;
+  canvas.height = 0.9 * innerHeight;
+  canvas.width = 0.9 * innerWidth;
 }
 
 class Circle {
-  static rx = 200;
-  static ry = 200;
-  static speed = 0.005;
-  static minRadius = 600;
-  static maxRadius = 900;
+  static rx = (canvas.height * canvas.width) / 12000;
+  static ry = (canvas.height * canvas.width) / 12000;
+  static speed = 0.01;
+  static minRadius = (canvas.height * canvas.width) / 5000;
+  static maxRadius = (canvas.height * canvas.width) / 2000;
 
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -23,7 +24,7 @@ class Circle {
     this.angle = Math.random() * 2 * Math.PI;
     this.radius =
       Math.random() * (Circle.maxRadius - Circle.minRadius) + Circle.minRadius;
-    this.firstColor = `hsla(${Math.random() * 360}, 100%, 50%, 1)`;
+    this.firstColor = `hsla(${Math.random() * 360}, 100%, 55%, 1)`;
     this.secondColor = `hsla(${Math.random() * 360}, 100%, 60%, 0)`;
   }
 
@@ -44,7 +45,7 @@ class Circle {
 }
 
 class GradientAnimation {
-  circlesNum = 20;
+  circlesNum = (canvas.height * canvas.width) / 20000;
 
   constructor() {
     this.generateCircles();
