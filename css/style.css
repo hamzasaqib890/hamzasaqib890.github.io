@@ -1,0 +1,28 @@
+html {
+    height: 200%
+}
+
+#pixels {
+    background-color: black;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#colors {
+    background: rgb(150, 150, 150);
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+}
+
+#overlay {
+    color: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+}
