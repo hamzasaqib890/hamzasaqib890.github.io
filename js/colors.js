@@ -12,11 +12,11 @@ function setSize() {
 }
 
 class Circle {
-  static rx = (canvas.height * canvas.width) / 12000;
-  static ry = (canvas.height * canvas.width) / 12000;
-  static speed = 0.01;
-  static minRadius = (canvas.height * canvas.width) / 5000;
-  static maxRadius = (canvas.height * canvas.width) / 2000;
+  static rx = Math.max(canvas.width / 10, 100);
+  static ry = Math.max(canvas.width / 10, 100);
+  static speed = 0.03;
+  static minRadius = Math.max(canvas.width / 7, 130);
+  static maxRadius = Math.max(canvas.width / 4, 230);
 
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -45,7 +45,7 @@ class Circle {
 }
 
 class GradientAnimation {
-  circlesNum = (canvas.height * canvas.width) / 20000;
+  circlesNum = Math.max(canvas.width / 30, 30);
 
   constructor() {
     this.generateCircles();
