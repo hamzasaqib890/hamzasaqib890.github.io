@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixels</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Hamza Saqib</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="pixels">
-        <h1>Please use a browser that supports the Canvas API</h1>
-    </canvas>
-    <h1>Pixels</h1>
-    <a href="colors.html">Colors</a>
-    <script src="js/pixels.js"></script>
+    <img src="/images/background.jpg" alt="" id="background">
+    <h1 id="name">Hamza Saqib</h1>
+    <div id="introScreen">
+        <div id="introText">
+            <h1 class="reveal">Hey, I'm&nbsp</h1>
+            <h1 class="hidden" id="hiddenName">Hamza Saqib</h1>
+        </div>
+        <div id="studentText" class="reveal">
+            <h1>A Computer Science student at the <img id="uwlogo" src="/images/uw_logo_white.png" alt=""></h1>
+        </div>
+        <h1 id="developerText" class="reveal">and a Software Developer</h1>
+    </div>
+    <script src="/js/home.js"></script>
 </body>
 </html>

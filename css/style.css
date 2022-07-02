@@ -2,6 +2,10 @@ html {
     height: 200%
 }
 
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 #pixels {
     background-color: black;
     z-index: -1;
@@ -25,4 +29,14 @@ html {
     top: 0;
     bottom: 0;
     z-index: 999;
+}
+
+#name {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 100px;
+    font-weight: 600;
 }

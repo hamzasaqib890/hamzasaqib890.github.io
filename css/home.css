@@ -1,0 +1,100 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 400vh;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+#background {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -1280px;
+    margin-top: -1008px;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+
+h1 {
+    position: absolute;
+    color: white;
+    font-weight: 600;
+    font-size: 100px;
+    text-align: center;
+    width: 100%;
+}
+
+#name {
+    position: fixed;
+    color: white;
+    font-weight: 600;
+    font-size: 300px;
+    top: 570px;
+    margin: 0;
+    width: auto;
+}
+
+.oneScreen {
+    height: 100vh;
+}
+
+#introScreen {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    border: green 1px solid;
+    color: white;
+}
+
+#introText {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#introText h1 {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+#studentText {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#studentText h1 {
+    position: relative;
+    width: auto;
+    display: inline;
+    vertical-align: middle;
+}
+
+#uwlogo {
+    position: relative;
+    display: inline;
+    vertical-align: middle;
+    height: 40%;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(150px);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 1s all ease;
+}
