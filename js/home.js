@@ -1,189 +1,224 @@
-function getScrollPercent() {
-  var h = document.documentElement,
-    b = document.body,
-    st = "scrollTop",
-    sh = "scrollHeight";
-  return ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
-}
+const docElem = document.documentElement;
+const body = document.body;
 
-addEventListener("scroll", () => {
-  updateName();
-  updateBackground();
-  updateIntroText();
-  updateStudent();
-  updateDeveloper();
-});
-
-function updateName() {
-  const scrollDecimal = getScrollPercent() / 100;
-  const name = document.querySelector("#name");
-
-  const hiddenNameRect = document
-    .querySelector("#hiddenName")
-    .getBoundingClientRect();
-
-  const introScreenRect = document
-    .querySelector("#introScreen")
-    .getBoundingClientRect();
-
-  const sizeVals = {
-    0: 300,
-    100: 100,
-    200: 100,
-  };
-
-  const leftVals = {
-    0: (innerWidth - name.clientWidth) / 2,
-    100: hiddenNameRect.left,
-    200: hiddenNameRect.left,
-  };
-
-  const topVals = {
-    0: 570,
-    100: (introScreenRect.height - hiddenNameRect.height) / 2,
-    150: (introScreenRect.height - hiddenNameRect.height) / 2,
-    200:
-      (introScreenRect.height - hiddenNameRect.height) / 2 -
-      introScreenRect.height / 4,
-  };
-
-  const size = getProgress(sizeVals, scrollDecimal);
-  name.style.fontSize = `${size}px`;
-  const top = getProgress(topVals, scrollDecimal);
-  name.style.top = `${top}px`;
-  const left = getProgress(leftVals, scrollDecimal);
-  name.style.left = `${left}px`;
-}
-
-function updateIntroText() {
-  const scrollPercent = getScrollPercent();
-  const introText = document.querySelector("#introText");
-  const introScreen = document.querySelector("#introScreen");
-
-  const topVals = {
-    0: introScreen.clientHeight,
-    100: (introScreen.clientHeight - introText.clientHeight) / 2,
-    150: (introScreen.clientHeight - introText.clientHeight) / 2,
-    200:
-      (introScreen.clientHeight - introText.clientHeight) / 2 -
-      introScreen.clientHeight / 4,
-    250:
-      (introScreen.clientHeight - introText.clientHeight) / 2 -
-      introScreen.clientHeight / 4,
-    300:
-      (introScreen.clientHeight - introText.clientHeight) / 2 -
-      introScreen.clientHeight / 4,
-  };
-
-  const top = getProgress(topVals, scrollPercent / 100);
-  introText.style.top = `${top}px`;
-
-  const revealText = document.querySelector("#introText .reveal");
-
-  if (scrollPercent > 33) {
-    revealText.classList.add("active");
-  } else if (scrollPercent < 5) {
-    revealText.classList.remove("active");
-  }
-}
-
-function updateStudent() {
-  const scrollPercent = getScrollPercent();
-  const studentText = document.querySelector("#studentText");
-  const introScreen = document.querySelector("#introScreen");
-
-  const topVals = {
-    0: introScreen.clientHeight,
-    100: introScreen.clientHeight,
-    150: introScreen.clientHeight,
-    200: (introScreen.clientHeight - studentText.scrollHeight + 80) / 2,
-    250: (introScreen.clientHeight - studentText.scrollHeight + 80) / 2,
-    300: (introScreen.clientHeight - studentText.scrollHeight + 80) / 2,
-  };
-
-  const top = getProgress(topVals, scrollPercent / 100);
-  studentText.style.top = `${top}px`;
-
-  if (scrollPercent > 70) {
-    studentText.classList.add("active");
-  } else if (scrollPercent < 40) {
-    studentText.classList.remove("active");
-  }
-}
-
-function updateDeveloper() {
-  const scrollPercent = getScrollPercent();
-  const developerText = document.querySelector("#developerText");
-  const introScreen = document.querySelector("#introScreen");
-
-  const topVals = {
-    0: introScreen.clientHeight,
-    100: introScreen.clientHeight,
-    150: introScreen.clientHeight,
-    200: introScreen.clientHeight,
-    250: introScreen.clientHeight,
-    275: (introScreen.clientHeight - developerText.scrollHeight + 80) / 2,
-  };
-
-  const top = getProgress(topVals, scrollPercent / 100);
-  developerText.style.top = `${top}px`;
-
-  if (scrollPercent > 95) {
-    developerText.classList.add("active");
-  } else if (scrollPercent < 70) {
-    developerText.classList.remove("active");
-  }
-}
-
-function updateBackground() {
-  const scrollDecimal = getScrollPercent() / 100;
-
-  const opacityVals = { 0: 100, 100: 0, 200: 0 };
-
-  const opacity = getProgress(opacityVals, scrollDecimal);
-
-  const bg = document.querySelector("#background");
-  bg.style.opacity = `${opacity}%`;
-}
-
-function getProgress(vals, progressPercent) {
-  const totalHeight = 400;
-  const progress = Math.floor(progressPercent * (totalHeight - 100));
-
-  const startProgress = (() => {
-    const start = Math.floor(progress / 25) * 25;
-    for (let i = 0; i < totalHeight; i += 25) {
-      if (start - i in vals) {
-        return start - i;
-      }
-    }
-  })();
-  if (startProgress == progress) {
-    return vals[startProgress];
-  }
-
-  const endProgress = (() => {
-    const start = Math.floor(progress / 25 + 1) * 25;
-    for (let i = 0; i < totalHeight; i += 25) {
-      if (start + i in vals) {
-        return start + i;
-      }
-    }
-  })();
-
-  const sectionProgress =
-    (progress - startProgress) / (endProgress - startProgress);
-
+function getScrollDecimal() {
   return (
-    vals[startProgress] +
-    (vals[endProgress] - vals[startProgress]) * sectionProgress
+    (docElem["scrollTop"] || body["scrollTop"]) /
+    ((docElem["scrollHeight"] || body["scrollHeight"]) - docElem.clientHeight)
   );
 }
 
+function getScrollProgress() {
+  return Math.floor(
+    getScrollDecimal() *
+      ((100 * body.clientHeight) / docElem.clientHeight - 100)
+  );
+}
+
+class ScrollAnimation {
+  static #animations = [];
+
+  static #addAnimation(propertySetter, keyframes) {
+    this.#animations.push({
+      setProperty: propertySetter,
+      keyframes: keyframes,
+      keys: Object.keys(keyframes).map(Number).sort(),
+    });
+  }
+
+  static addAll() {
+    this.#animations = [];
+    const background = document.querySelector("#background");
+    const name = document.querySelector("#name");
+    const hiddenNameRect = document
+      .querySelector("#hiddenName")
+      .getBoundingClientRect();
+    const introScreenRect = document
+      .querySelector("#introScreen")
+      .getBoundingClientRect();
+    const introScreen = document.querySelector("#introScreen");
+    const introText = document.querySelector("#introText");
+    const studentText = document.querySelector("#studentText");
+    const developerText = document.querySelector("#developerText");
+
+    this.#addAnimation(
+      (val) => {
+        background.style.opacity = `${val}%`;
+      },
+      { 0: 100, 100: 0 }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        name.style.fontSize = `${val}px`;
+      },
+      { 0: 300, 100: 100 }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        name.style.left = `${val}px`;
+      },
+      {
+        0: (innerWidth - name.clientWidth) / 2,
+        100: hiddenNameRect.left,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        name.style.top = `${val}px`;
+      },
+      {
+        0: 570,
+        100: (introScreenRect.height - hiddenNameRect.height) / 2,
+        150: (introScreenRect.height - hiddenNameRect.height) / 2,
+        200:
+          (introScreenRect.height - hiddenNameRect.height) / 2 -
+          introScreenRect.height / 4,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        introText.style.top = `${val}px`;
+      },
+      {
+        0: introScreen.clientHeight,
+        100: (introScreen.clientHeight - introText.clientHeight) / 2,
+        150: (introScreen.clientHeight - introText.clientHeight) / 2,
+        200:
+          (introScreen.clientHeight - introText.clientHeight) / 2 -
+          introScreen.clientHeight / 4,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        studentText.style.top = `${val}px`;
+      },
+      {
+        150: introScreen.clientHeight,
+        200: (introScreen.clientHeight - studentText.scrollHeight + 80) / 2,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        developerText.style.top = `${val}px`;
+      },
+      {
+        250: introScreen.clientHeight,
+        275: (introScreen.clientHeight - developerText.scrollHeight + 80) / 2,
+      }
+    );
+  }
+
+  static #updateAnimation(animation, scrollProgress) {
+    if (animation.keys.length === 0) {
+      return;
+    }
+
+    const startKey = (() => {
+      if (animation.keys[0] >= scrollProgress) {
+        return animation.keys[0];
+      }
+      for (let i = 1; i < animation.keys.length; i++) {
+        if (animation.keys[i] > scrollProgress) {
+          return animation.keys[i - 1];
+        }
+      }
+      return animation.keys[animation.keys.length - 1];
+    })();
+    const startFrame = animation.keyframes[startKey.toString()];
+
+    if (startKey >= scrollProgress) {
+      animation.setProperty(startFrame);
+      return;
+    }
+
+    const endKey = (() => {
+      if (animation.keys[0] >= scrollProgress) {
+        return animation.keys[0];
+      }
+      for (let i = 1; i < animation.keys.length; i++) {
+        if (animation.keys[i] >= scrollProgress) {
+          return animation.keys[i];
+        }
+      }
+      return animation.keys[animation.keys.length - 1];
+    })();
+    const endFrame = animation.keyframes[endKey.toString()];
+
+    if (endKey <= scrollProgress) {
+      animation.setProperty(endFrame);
+      return;
+    }
+
+    const sectionProgress = (scrollProgress - startKey) / (endKey - startKey);
+
+    animation.setProperty(
+      startFrame + (endFrame - startFrame) * sectionProgress
+    );
+  }
+
+  static updateAll() {
+    const scrollProgress = getScrollProgress();
+
+    for (let animation of this.#animations) {
+      this.#updateAnimation(animation, scrollProgress);
+    }
+  }
+}
+
+class Reveal {
+  static #reveals = [];
+
+  static #addReveal(element, appear, disappear) {
+    this.#reveals.push({
+      element: element,
+      appear: appear,
+      disappear: disappear,
+    });
+  }
+
+  static addAll() {
+    const heyText = document.querySelector("#heyText");
+    const studentText = document.querySelector("#studentText");
+    const developerText = document.querySelector("#developerText");
+
+    this.#addReveal(heyText, 100, 0);
+    this.#addReveal(studentText, 200, 100);
+    this.#addReveal(developerText, 275, 175);
+  }
+
+  static updateAll() {
+    const scrollProgress = getScrollProgress();
+
+    for (let reveal of this.#reveals) {
+      if (scrollProgress >= reveal.appear) {
+        reveal.element.classList.add("active");
+      } else if (scrollProgress <= reveal.disappear) {
+        reveal.element.classList.remove("active");
+      }
+    }
+  }
+}
+
+addEventListener("scroll", () => {
+  ScrollAnimation.updateAll();
+  Reveal.updateAll();
+});
+
+addEventListener("resize", () => {
+  ScrollAnimation.addAll();
+  ScrollAnimation.updateAll();
+  Reveal.updateAll();
+});
+
 window.onload = () => {
-  updateName();
-  updateIntroText();
-  updateBackground();
-  updateStudent();
-  updateDeveloper();
+  ScrollAnimation.addAll();
+  ScrollAnimation.updateAll();
+  Reveal.addAll();
+  Reveal.updateAll();
 };
