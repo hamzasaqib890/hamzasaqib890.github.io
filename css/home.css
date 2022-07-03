@@ -1,43 +1,152 @@
 body {
-    font-family: 'Poppins', sans-serif;
     height: 400vh;
+    background-image: url('/images/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center 68%;
     background-color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 100px;
     margin: 0;
-    padding: 0;
 }
 
-#background {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    margin-left: -1280px;
-    margin-top: -1008px;
-    width: 100%;
-    height: auto;
-    z-index: -1;
+@media screen and (max-width: 2500px) {
+    body {
+        font-size: 90px;
+    }
+}
+@media screen and (max-width: 2250px) {
+    body {
+        font-size: 80px;
+    }
+}
+@media screen and (max-width: 2000px) {
+    body {
+        font-size: 70px;
+    }
+}
+@media screen and (max-width: 1775px) {
+    body {
+        font-size: 100px;
+    }
+}
+@media screen and (max-width: 1500px) {
+    body {
+        font-size: 85px;
+    }
+}
+@media screen and (max-width: 1250px) {
+    body {
+        font-size: 75px;
+    }
+}
+@media screen and (max-width: 1100px) {
+    body {
+        font-size: 65px;
+    }
+}
+@media screen and (max-width: 960px) {
+    body {
+        font-size: 55px;
+    }
+}
+@media screen and (max-width: 810px) {
+    body {
+        font-size: 47px;
+    }
+}
+@media screen and (max-width: 500px) {
+    body {
+        font-size: 35px;
+    }
 }
 
 h1 {
     position: absolute;
     color: white;
-    font-weight: 600;
-    font-size: 100px;
     text-align: center;
     width: 100%;
+    font-size: 100%;
 }
 
-#name {
+#nameFirst {
     position: fixed;
-    color: white;
-    font-weight: 600;
-    font-size: 300px;
-    top: 570px;
-    margin: 0;
+    font-size: 300%;
     width: auto;
+    margin: 0;
+}
+#nameLast {
+    position: fixed;
+    font-size: 300%;
+    width: auto;
+    margin: 0;
 }
 
-.oneScreen {
-    height: 100vh;
+#hiddenName {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    font-size: 300px;
+}
+
+@media screen and (max-width: 2050px) {
+    #hiddenName {
+        font-size: 270px;
+    }
+}
+@media screen and (max-width: 1850px) {
+    #hiddenName {
+        font-size: 240px;
+    }
+}
+@media screen and (max-width: 1650px) {
+    #hiddenName {
+        font-size: 210px;
+    }
+}
+@media screen and (max-width: 1450px) {
+    #hiddenName {
+        font-size: 180px;
+    }
+}
+@media screen and (max-width: 1250px) {
+    #hiddenName {
+        font-size: 150px;
+    }
+}
+@media screen and (max-width: 1050px) {
+    #hiddenName {
+        font-size: 120px;
+    }
+}
+@media screen and (max-width: 850px) {
+    #hiddenName {
+        font-size: 180px;
+    }
+}
+@media screen and (max-width: 650px) {
+    #hiddenName {
+        font-size: 135px;
+    }
+}
+@media screen and (max-width: 500px) {
+    #hiddenName {
+        font-size: 105px;
+    }
+}
+@media screen and (max-width: 375px) {
+    #hiddenName {
+        font-size: 75px;
+    }
+}
+
+#hiddenName h1 {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    margin: 0;
 }
 
 #introScreen {
@@ -46,28 +155,24 @@ h1 {
     top: 0;
     left: 0;
     height: 100vh;
-    border: green 1px solid;
-    color: white;
 }
 
-#introText {
+#introText, #studentText {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+#developerText {
+    margin: 0;
 }
 
 #introText h1 {
     position: relative;
     display: inline-block;
     width: auto;
-}
-
-#studentText {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    margin: 0;
 }
 
 #studentText h1 {
@@ -75,13 +180,13 @@ h1 {
     width: auto;
     display: inline;
     vertical-align: middle;
+    margin: 0;
 }
 
 #uwlogo {
     position: relative;
     display: inline;
     vertical-align: middle;
-    height: 40%;
 }
 
 .hidden {

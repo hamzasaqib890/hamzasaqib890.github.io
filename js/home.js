@@ -28,10 +28,17 @@ class ScrollAnimation {
 
   static addAll() {
     this.#animations = [];
-    const background = document.querySelector("#background");
-    const name = document.querySelector("#name");
-    const hiddenNameRect = document
-      .querySelector("#hiddenName")
+    const hiddenName = document.querySelector("#hiddenName");
+    const nameFirst = document.querySelector("#nameFirst");
+    const nameLast = document.querySelector("#nameLast");
+    const hiddenFirstStartRect = document
+      .querySelector("#hiddenFirstStart")
+      .getBoundingClientRect();
+    const hiddenLastStartRect = document
+      .querySelector("#hiddenLastStart")
+      .getBoundingClientRect();
+    const hiddenFirstEndRect = document
+      .querySelector("#hiddenFirstEnd")
       .getBoundingClientRect();
     const introScreenRect = document
       .querySelector("#introScreen")
@@ -39,43 +46,63 @@ class ScrollAnimation {
     const introScreen = document.querySelector("#introScreen");
     const introText = document.querySelector("#introText");
     const studentText = document.querySelector("#studentText");
+    const uwlogo = document.querySelector("#uwlogo");
     const developerText = document.querySelector("#developerText");
 
+    hiddenName.style.bottom = `${innerHeight * 0.3}px`;
+
     this.#addAnimation(
       (val) => {
-        background.style.opacity = `${val}%`;
+        introScreen.style.backgroundColor = `rgba(0,0,0,${val})`;
       },
-      { 0: 100, 100: 0 }
+      { 0: 0, 100: 1 }
     );
 
     this.#addAnimation(
       (val) => {
-        name.style.fontSize = `${val}px`;
-      },
-      { 0: 300, 100: 100 }
-    );
-
-    this.#addAnimation(
-      (val) => {
-        name.style.left = `${val}px`;
+        nameFirst.style.fontSize = `${val}px`;
+        nameLast.style.fontSize = `${val}px`;
       },
       {
-        0: (innerWidth - name.clientWidth) / 2,
-        100: hiddenNameRect.left,
+        0: parseInt(getComputedStyle(hiddenName).fontSize, 10),
+        100: parseInt(getComputedStyle(body).fontSize, 10),
       }
     );
 
     this.#addAnimation(
       (val) => {
-        name.style.top = `${val}px`;
+        nameFirst.style.left = `${val}px`;
       },
       {
-        0: 570,
-        100: (introScreenRect.height - hiddenNameRect.height) / 2,
-        150: (introScreenRect.height - hiddenNameRect.height) / 2,
+        0: hiddenFirstStartRect.left,
+        100: hiddenFirstEndRect.left,
+      }
+    );
+    nameLast.style.left = `${hiddenLastStartRect.left}px`;
+
+    this.#addAnimation(
+      (val) => {
+        nameLast.style.opacity = `${val}%`;
+      },
+      {
+        0: 100,
+        60: 0,
+      }
+    );
+    nameLast.style.top = `${hiddenLastStartRect.top}px`;
+
+    this.#addAnimation(
+      (val) => {
+        nameFirst.style.top = `${val}px`;
+      },
+      {
+        0: hiddenFirstStartRect.top,
+        100: (introScreen.clientHeight - introText.clientHeight) / 2,
+        150: (introScreen.clientHeight - introText.clientHeight) / 2,
         200:
-          (introScreenRect.height - hiddenNameRect.height) / 2 -
-          introScreenRect.height / 4,
+          (innerHeight - studentText.clientHeight) / 2 -
+          introText.clientHeight -
+          innerHeight / 50,
       }
     );
 
@@ -88,18 +115,20 @@ class ScrollAnimation {
         100: (introScreen.clientHeight - introText.clientHeight) / 2,
         150: (introScreen.clientHeight - introText.clientHeight) / 2,
         200:
-          (introScreen.clientHeight - introText.clientHeight) / 2 -
-          introScreen.clientHeight / 4,
+          (innerHeight - studentText.clientHeight) / 2 -
+          introText.clientHeight -
+          innerHeight / 50,
       }
     );
 
+    uwlogo.style.height = `${hiddenFirstEndRect.height}px`;
     this.#addAnimation(
       (val) => {
         studentText.style.top = `${val}px`;
       },
       {
         150: introScreen.clientHeight,
-        200: (introScreen.clientHeight - studentText.scrollHeight + 80) / 2,
+        200: (innerHeight - studentText.clientHeight) / 2,
       }
     );
 
@@ -109,7 +138,10 @@ class ScrollAnimation {
       },
       {
         250: introScreen.clientHeight,
-        275: (introScreen.clientHeight - developerText.scrollHeight + 80) / 2,
+        275:
+          (innerHeight - studentText.clientHeight) / 2 +
+          studentText.clientHeight +
+          innerHeight / 50,
       }
     );
   }
@@ -211,12 +243,14 @@ addEventListener("scroll", () => {
 });
 
 addEventListener("resize", () => {
+  console.log("test");
   ScrollAnimation.addAll();
   ScrollAnimation.updateAll();
   Reveal.updateAll();
 });
 
 window.onload = () => {
+  ScrollAnimation.addAll();
   ScrollAnimation.addAll();
   ScrollAnimation.updateAll();
   Reveal.addAll();
