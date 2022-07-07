@@ -40,14 +40,13 @@ class ScrollAnimation {
     const hiddenFirstEndRect = document
       .querySelector("#hiddenFirstEnd")
       .getBoundingClientRect();
-    const introScreenRect = document
-      .querySelector("#introScreen")
-      .getBoundingClientRect();
     const introScreen = document.querySelector("#introScreen");
     const introText = document.querySelector("#introText");
     const studentText = document.querySelector("#studentText");
     const uwlogo = document.querySelector("#uwlogo");
     const developerText = document.querySelector("#developerText");
+
+    const fontSizeAttr = getComputedStyle(body).getPropertyValue("font-size");
 
     hiddenName.style.bottom = `${innerHeight * 0.3}px`;
 
@@ -65,7 +64,7 @@ class ScrollAnimation {
       },
       {
         0: parseInt(getComputedStyle(hiddenName).fontSize, 10),
-        100: parseInt(getComputedStyle(body).fontSize, 10),
+        100: parseInt(fontSizeAttr, 10),
       }
     );
 
@@ -89,20 +88,20 @@ class ScrollAnimation {
         60: 0,
       }
     );
-    nameLast.style.top = `${hiddenLastStartRect.top}px`;
+    nameLast.style.top = `${hiddenLastStartRect.top - 65}px`;
 
     this.#addAnimation(
       (val) => {
         nameFirst.style.top = `${val}px`;
       },
       {
-        0: hiddenFirstStartRect.top,
+        0: hiddenFirstStartRect.top - 65,
         100: (introScreen.clientHeight - introText.clientHeight) / 2,
         150: (introScreen.clientHeight - introText.clientHeight) / 2,
         200:
           (innerHeight - studentText.clientHeight) / 2 -
           introText.clientHeight -
-          innerHeight / 50,
+          innerHeight / 40,
       }
     );
 
@@ -117,7 +116,7 @@ class ScrollAnimation {
         200:
           (innerHeight - studentText.clientHeight) / 2 -
           introText.clientHeight -
-          innerHeight / 50,
+          innerHeight / 40,
       }
     );
 
@@ -141,7 +140,7 @@ class ScrollAnimation {
         275:
           (innerHeight - studentText.clientHeight) / 2 +
           studentText.clientHeight +
-          innerHeight / 50,
+          innerHeight / 40,
       }
     );
   }
@@ -243,7 +242,6 @@ addEventListener("scroll", () => {
 });
 
 addEventListener("resize", () => {
-  console.log("test");
   ScrollAnimation.addAll();
   ScrollAnimation.updateAll();
   Reveal.updateAll();

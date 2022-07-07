@@ -32,36 +32,27 @@ body {
         font-size: 100px;
     }
 }
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1050px) {
     body {
-        font-size: 85px;
+        font-size: 70px;
     }
 }
-@media screen and (max-width: 1250px) {
-    body {
-        font-size: 75px;
-    }
-}
-@media screen and (max-width: 1100px) {
-    body {
-        font-size: 65px;
-    }
-}
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 750px) {
     body {
         font-size: 55px;
     }
 }
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 580px) {
     body {
-        font-size: 47px;
+        font-size: 50px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 400px) {
     body {
-        font-size: 35px;
+        font-size: 40px;
     }
 }
+
 
 h1 {
     position: absolute;
@@ -113,33 +104,42 @@ h1 {
 }
 @media screen and (max-width: 1250px) {
     #hiddenName {
-        font-size: 150px;
+        font-size: 270px;
     }
 }
 @media screen and (max-width: 1050px) {
     #hiddenName {
-        font-size: 120px;
+        font-size: 240px;
     }
 }
 @media screen and (max-width: 850px) {
+    #hiddenName {
+        font-size: 210px;
+    }
+}
+@media screen and (max-width: 750px) {
     #hiddenName {
         font-size: 180px;
     }
 }
 @media screen and (max-width: 650px) {
     #hiddenName {
-        font-size: 135px;
+        font-size: 150px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
     #hiddenName {
-        font-size: 105px;
+        font-size: 120px;
     }
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
     #hiddenName {
-        font-size: 75px;
+        font-size: 100px;
     }
+}
+
+#hiddenName {
+    line-height: 100%;
 }
 
 #hiddenName h1 {
@@ -166,6 +166,7 @@ h1 {
 
 #developerText {
     margin: 0;
+
 }
 
 #introText h1 {
@@ -201,5 +202,5 @@ h1 {
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
-    transition: 1s all ease;
+    transition: opacity 1s ease, transform 1s ease;
 }
