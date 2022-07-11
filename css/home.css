@@ -1,5 +1,5 @@
 body {
-    height: 400vh;
+    height: 700vh;
     background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -203,4 +203,34 @@ h1 {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 1s ease, transform 1s ease;
+}
+
+#sdDefinition {
+    position: absolute;
+    font-family: serif;
+    padding: 30px;
+    padding-left: 50px;
+}
+
+#sdDefinition h2 {
+    margin-bottom: 0;
+}
+
+#sdDefinition #sd {
+    color: black;
+    font-size: 100%;
+}
+#sdDefinition #sdPronounciation {
+    color: gray;
+    font-size: 50%;
+    display: inline-block;
+}
+#sdDefinition #noun {
+    color: rgb(75, 125, 200);
+    font-size: 50%;
+    display: inline-block;
+}
+#sdDefinition #definition {
+    color: black;
+    font-size: 50%;
 }
