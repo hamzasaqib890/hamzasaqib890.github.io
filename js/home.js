@@ -24,8 +24,11 @@ class BookAnimation {
     this.anim();
   }
 
-  drawPage(scrollDecimal) {
-    const pathRadius = Math.sqrt(canvas.height ** 2 + canvas.height ** 2) - 10;
+  drawPage(scrollDecimal, translateX, translateY) {
+    const pathRadius =
+      Math.sqrt(
+        canvas.height ** 2 + Math.min(canvas.width, canvas.height) ** 2
+      ) - 10;
     const angleStart = Math.PI / 2;
     const angleEnd = Math.PI - Math.asin(canvas.height / pathRadius);
     const cornerOffsetX =
@@ -39,20 +42,25 @@ class BookAnimation {
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.strokeStyle = "rgb(200, 200, 200)";
     ctx.beginPath();
-    ctx.moveTo(canvas.width, canvas.height / 5 + 20);
+    ctx.moveTo(canvas.width, canvas.height / 5 + 20 - translateY); // top right corner
     ctx.lineTo(
-      canvas.width + cornerOffsetX,
-      canvas.height / 5 - cornerOffsetY + 20
-    );
-    ctx.lineTo(canvas.width + cornerOffsetX, canvas.height);
-    ctx.lineTo(canvas.width, canvas.height);
+      canvas.width + cornerOffsetX - translateX,
+      canvas.height / 5 - cornerOffsetY + 20 - translateY
+    ); // top left corner
+    ctx.lineTo(canvas.width + cornerOffsetX - translateX, canvas.height); // bottom left corner
+    ctx.lineTo(canvas.width, canvas.height); // bottom right corner
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
   }
 
-  drawCover(scrollDecimal) {
-    const pathRadius = Math.sqrt(canvas.height ** 2 + canvas.height ** 2);
+  drawCover(scrollDecimal, translateX, translateY) {
+    if (scrollDecimal < 0) {
+      return;
+    }
+    const pathRadius = Math.sqrt(
+      canvas.height ** 2 + Math.min(canvas.width, canvas.height) ** 2
+    );
     const angleStart = Math.PI / 2;
     const angleEnd = Math.PI - Math.asin(canvas.height / pathRadius);
     const cornerOffsetX =
@@ -65,22 +73,46 @@ class BookAnimation {
 
     ctx.fillStyle = "rgb(30, 30, 140)";
     ctx.beginPath();
-    ctx.moveTo(canvas.width, canvas.height / 5);
-    ctx.lineTo(canvas.width + cornerOffsetX, canvas.height / 5 - cornerOffsetY);
-    ctx.lineTo(canvas.width + cornerOffsetX, canvas.height);
-    ctx.lineTo(canvas.width, canvas.height);
+    ctx.moveTo(canvas.width, canvas.height / 5 - translateY); // top right corner
+    ctx.lineTo(
+      canvas.width + cornerOffsetX - translateX,
+      canvas.height / 5 - cornerOffsetY - translateY
+    ); // top left corner
+    ctx.lineTo(canvas.width + cornerOffsetX - translateX, canvas.height); // bottom left corner
+    ctx.lineTo(canvas.width, canvas.height); // bottom right corner
     ctx.closePath();
     ctx.fill();
   }
 
   drawBook() {
-    const scrollDecimal = 1 - (600 - getScrollProgress()) / 200;
+    let scrollDecimal = 1 - (600 - Math.min(598, getScrollProgress())) / 200;
+    const scrollDecimalBackCover = Math.min(
+      1 - (800 - getScrollProgress()) / 100,
+      0.94
+    );
+    if (scrollDecimalBackCover >= 0.98) {
+      scrollDecimal = 1;
+    }
 
-    this.drawCover(scrollDecimal);
-    this.drawPage(1 - Math.cos((Math.PI * scrollDecimal) / 2));
-    this.drawPage(scrollDecimal ** 2);
-    this.drawPage(scrollDecimal ** 3);
-    this.drawPage(scrollDecimal ** 4);
+    const scrollDecimalTranslate = 1 - (850 - getScrollProgress()) / 100;
+    const translateX =
+      Math.min(1, Math.max(0, scrollDecimalTranslate)) ** 2 *
+      (canvas.width - Math.min(canvas.width, canvas.height) + 80);
+    const translateY =
+      Math.min(1, Math.max(0, scrollDecimalTranslate)) ** 2 *
+      (canvas.height / 5);
+
+    this.drawCover(scrollDecimal, translateX, translateY);
+    this.drawPage(
+      1 - Math.cos((Math.PI * scrollDecimal) / 2),
+      translateX,
+      translateY
+    );
+    this.drawPage(scrollDecimal ** 2, translateX, translateY);
+    this.drawPage(scrollDecimal ** 3, translateX, translateY);
+    this.drawPage(scrollDecimal ** 4, translateX, translateY);
+
+    this.drawCover(scrollDecimalBackCover, translateX, translateY);
   }
 
   anim() {
@@ -251,7 +283,7 @@ class ScrollAnimation {
     sdDefinition.style.top = `${canvas.height / 5}px`;
     sdDefinition.style.left = `${Math.max(canvas.width - canvas.height, 0)}px`;
     sdDefinition.style.width = `${
-      Math.min(canvas.height, canvas.width) - 50
+      Math.min(canvas.height, canvas.width) - 80
     }px`;
     sdDefinition.style.height = `${(canvas.height * 4) / 5}px`;
 
@@ -262,6 +294,8 @@ class ScrollAnimation {
       {
         590: 0,
         600: 100,
+        700: 100,
+        710: 0,
       }
     );
   }
@@ -372,10 +406,10 @@ addEventListener("scroll", () => {
 });
 
 addEventListener("resize", () => {
+  bookAnimation.setSize();
   ScrollAnimation.addAll();
   ScrollAnimation.updateAll();
   Reveal.updateAll();
-  bookAnimation.setSize();
 });
 
 window.onload = () => {

@@ -1,5 +1,5 @@
 body {
-    height: 700vh;
+    height: 950vh;
     background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -209,7 +209,7 @@ h1 {
     position: absolute;
     font-family: serif;
     padding: 30px;
-    padding-left: 50px;
+    padding-left: 80px;
 }
 
 #sdDefinition h2 {
