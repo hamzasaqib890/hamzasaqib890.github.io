@@ -1,5 +1,5 @@
 body {
-    height: 950vh;
+    height: 1400vh;
     background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -171,7 +171,6 @@ h1 {
 
 #introText h1 {
     position: relative;
-    display: inline-block;
     width: auto;
     margin: 0;
 }
@@ -190,18 +189,46 @@ h1 {
     vertical-align: middle;
 }
 
+.centerFlex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.centerFlex h1 {
+    position: relative;
+    color: #ADEFD1;
+}
+
+#thinking {
+    margin-left: 30px;
+    width: 1.5em;
+    vertical-align: -10%;
+}
+
 .hidden {
     opacity: 0;
 }
 
-.reveal {
+.reveal.floatUp {
     opacity: 0;
     transform: translateY(150px);
+}
+.reveal.fastRight {
+    opacity: 0;
+    transform: translateX(-80%);
+}
+.reveal.fastLeft {
+    opacity: 0;
+    transform: translateX(80%);
 }
 
 .reveal.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0);
     transition: opacity 1s ease, transform 1s ease;
 }
 
@@ -233,4 +260,49 @@ h1 {
 #sdDefinition #definition {
     color: black;
     font-size: 50%;
+}
+
+#creativityText {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#creativityText h1 {
+    position: relative;
+    width: auto;
+    margin: 0;
+}
+
+#creativityRainbow {
+    position: fixed;
+    width: auto;
+    margin: 0;
+}
+
+.rainbowAnimated {
+    background: linear-gradient(to right, rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 0), rgb(0, 255, 0));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 5s linear infinite;
+    background-size: 200% 100%;
+}
+
+@keyframes rainbow_animation {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0% 0;
+    }
+}
+
+#pixels {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
