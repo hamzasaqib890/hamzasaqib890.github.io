@@ -71,7 +71,7 @@ class BookAnimation {
         Math.sin(angleStart + (angleEnd - angleStart) * scrollDecimal) -
       canvas.height;
 
-    ctx.fillStyle = "rgb(30, 30, 140)";
+    ctx.fillStyle = "#00203F";
     ctx.beginPath();
     ctx.moveTo(canvas.width, canvas.height / 5 - translateY); // top right corner
     ctx.lineTo(
@@ -152,6 +152,9 @@ class ScrollAnimation {
     const uwlogo = document.querySelector("#uwlogo");
     const developerText = document.querySelector("#developerText");
     const sdDefinition = document.querySelector("#sdDefinition");
+    const creativityText = document.querySelector("#creativity");
+    const creativityRainbowText = document.querySelector("#creativityRainbow");
+    const pixelsScreen = document.querySelector("#pixels");
 
     const fontSizeAttr = getComputedStyle(body).getPropertyValue("font-size");
 
@@ -298,6 +301,72 @@ class ScrollAnimation {
         710: 0,
       }
     );
+
+    creativityRainbowText.style.left = `${
+      creativityText.getBoundingClientRect().left
+    }px`;
+    creativityRainbowText.style.top = `${
+      creativityText.getBoundingClientRect().top
+    }px`;
+
+    this.#addAnimation(
+      (val) => {
+        if (getScrollProgress() < 900) {
+          creativityRainbowText.style.display = "none";
+          return;
+        }
+        creativityRainbowText.style.display = "block";
+        creativityRainbowText.style.opacity = `${val}%`;
+      },
+      {
+        900: 0,
+        999: 100,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        creativityRainbowText.style.fontSize = `${val ** 4}%`;
+      },
+      {
+        1100: 100 ** (1 / 4),
+        1300: 10000 ** (1 / 4),
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        creativityRainbowText.style.left = `${
+          val - creativityRainbowText.getBoundingClientRect().width / 2
+        }px`;
+      },
+      {
+        1100:
+          creativityText.getBoundingClientRect().left +
+          creativityText.getBoundingClientRect().width / 2,
+        1300: innerWidth / 2,
+      }
+    );
+    this.#addAnimation(
+      (val) => {
+        creativityRainbowText.style.top = `${
+          val - creativityRainbowText.getBoundingClientRect().height / 2
+        }px`;
+      },
+      {
+        1100:
+          creativityText.getBoundingClientRect().top +
+          creativityText.getBoundingClientRect().height / 2,
+        1300: innerHeight / 2,
+      }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        pixelsScreen.style.opacity = `${val ** 2}%`;
+      },
+      { 1200: 0, 1300: 100 ** (1 / 2) }
+    );
   }
 
   static #updateAnimation(animation, scrollProgress) {
@@ -372,10 +441,15 @@ class Reveal {
     const heyText = document.querySelector("#heyText");
     const studentText = document.querySelector("#studentText");
     const developerText = document.querySelector("#developerText");
+    const psText = document.querySelector("#problemSolvingText");
+    const expressingText = document.querySelector("#expressingText");
+    const thinkingImg = document.querySelector("#thinking");
 
     this.#addReveal(heyText, 100, 0);
     this.#addReveal(studentText, 200, 100);
-    this.#addReveal(developerText, 275, 175);
+    this.#addReveal(developerText, 300, 175);
+    this.#addReveal(psText, 850, 820);
+    this.#addReveal(expressingText, 850, 820);
   }
 
   static updateAll() {
