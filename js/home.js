@@ -1,7 +1,7 @@
+import {bookCanvas, BookAnimation} from "./book.js"
+
 const docElem = document.documentElement;
 const body = document.body;
-const canvas = document.querySelector("#book");
-const ctx = canvas.getContext("2d");
 
 function getScrollDecimal() {
   return (
@@ -15,110 +15,6 @@ function getScrollProgress() {
     getScrollDecimal() *
       ((100 * body.clientHeight) / docElem.clientHeight - 100)
   );
-}
-
-class BookAnimation {
-  setSize() {
-    canvas.height = innerHeight;
-    canvas.width = innerWidth;
-    this.anim();
-  }
-
-  drawPage(scrollDecimal, translateX, translateY) {
-    const pathRadius =
-      Math.sqrt(
-        canvas.height ** 2 + Math.min(canvas.width, canvas.height) ** 2
-      ) - 10;
-    const angleStart = Math.PI / 2;
-    const angleEnd = Math.PI - Math.asin(canvas.height / pathRadius);
-    const cornerOffsetX =
-      pathRadius *
-      Math.cos(angleStart + (angleEnd - angleStart) * scrollDecimal);
-    const cornerOffsetY =
-      pathRadius *
-        Math.sin(angleStart + (angleEnd - angleStart) * scrollDecimal) -
-      canvas.height;
-
-    ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.strokeStyle = "rgb(200, 200, 200)";
-    ctx.beginPath();
-    ctx.moveTo(canvas.width, canvas.height / 5 + 20 - translateY); // top right corner
-    ctx.lineTo(
-      canvas.width + cornerOffsetX - translateX,
-      canvas.height / 5 - cornerOffsetY + 20 - translateY
-    ); // top left corner
-    ctx.lineTo(canvas.width + cornerOffsetX - translateX, canvas.height); // bottom left corner
-    ctx.lineTo(canvas.width, canvas.height); // bottom right corner
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-  }
-
-  drawCover(scrollDecimal, translateX, translateY) {
-    if (scrollDecimal < 0) {
-      return;
-    }
-    const pathRadius = Math.sqrt(
-      canvas.height ** 2 + Math.min(canvas.width, canvas.height) ** 2
-    );
-    const angleStart = Math.PI / 2;
-    const angleEnd = Math.PI - Math.asin(canvas.height / pathRadius);
-    const cornerOffsetX =
-      pathRadius *
-      Math.cos(angleStart + (angleEnd - angleStart) * scrollDecimal);
-    const cornerOffsetY =
-      pathRadius *
-        Math.sin(angleStart + (angleEnd - angleStart) * scrollDecimal) -
-      canvas.height;
-
-    ctx.fillStyle = "#00203F";
-    ctx.beginPath();
-    ctx.moveTo(canvas.width, canvas.height / 5 - translateY); // top right corner
-    ctx.lineTo(
-      canvas.width + cornerOffsetX - translateX,
-      canvas.height / 5 - cornerOffsetY - translateY
-    ); // top left corner
-    ctx.lineTo(canvas.width + cornerOffsetX - translateX, canvas.height); // bottom left corner
-    ctx.lineTo(canvas.width, canvas.height); // bottom right corner
-    ctx.closePath();
-    ctx.fill();
-  }
-
-  drawBook() {
-    let scrollDecimal = 1 - (600 - Math.min(598, getScrollProgress())) / 200;
-    const scrollDecimalBackCover = Math.min(
-      1 - (800 - getScrollProgress()) / 100,
-      0.94
-    );
-    if (scrollDecimalBackCover >= 0.98) {
-      scrollDecimal = 1;
-    }
-
-    const scrollDecimalTranslate = 1 - (850 - getScrollProgress()) / 100;
-    const translateX =
-      Math.min(1, Math.max(0, scrollDecimalTranslate)) ** 2 *
-      (canvas.width - Math.min(canvas.width, canvas.height) + 80);
-    const translateY =
-      Math.min(1, Math.max(0, scrollDecimalTranslate)) ** 2 *
-      (canvas.height / 5);
-
-    this.drawCover(scrollDecimal, translateX, translateY);
-    this.drawPage(
-      1 - Math.cos((Math.PI * scrollDecimal) / 2),
-      translateX,
-      translateY
-    );
-    this.drawPage(scrollDecimal ** 2, translateX, translateY);
-    this.drawPage(scrollDecimal ** 3, translateX, translateY);
-    this.drawPage(scrollDecimal ** 4, translateX, translateY);
-
-    this.drawCover(scrollDecimalBackCover, translateX, translateY);
-  }
-
-  anim() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.drawBook();
-  }
 }
 
 class ScrollAnimation {
@@ -283,12 +179,12 @@ class ScrollAnimation {
       }
     );
 
-    sdDefinition.style.top = `${canvas.height / 5}px`;
-    sdDefinition.style.left = `${Math.max(canvas.width - canvas.height, 0)}px`;
+    sdDefinition.style.top = `${bookCanvas.height / 5}px`;
+    sdDefinition.style.left = `${Math.max(bookCanvas.width - bookCanvas.height, 0)}px`;
     sdDefinition.style.width = `${
-      Math.min(canvas.height, canvas.width) - 80
+      Math.min(bookCanvas.height, bookCanvas.width) - 80
     }px`;
-    sdDefinition.style.height = `${(canvas.height * 4) / 5}px`;
+    sdDefinition.style.height = `${(bookCanvas.height * 4) / 5}px`;
 
     this.#addAnimation(
       (val) => {
@@ -472,10 +368,10 @@ addEventListener("scroll", () => {
   ScrollAnimation.updateAll();
   Reveal.updateAll();
   if (getScrollProgress() > 400) {
-    canvas.style.display = "block";
-    bookAnimation.anim();
+    bookCanvas.style.display = "block";
+    bookAnimation.anim(getScrollProgress());
   } else {
-    canvas.style.display = "none";
+    bookCanvas.style.display = "none";
   }
 });
 
