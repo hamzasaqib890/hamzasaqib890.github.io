@@ -375,9 +375,9 @@ class DisplayControl {
   static addAll() {
     this.#addRange(bookCanvas, 400, 905);
     this.#addRange(pixelsCanvas, 1200, 1400);
-    this.#addRange(document.querySelector("#hiddenName"), -1, 100);
-    this.#addRange(document.querySelector("#nameFirst"), -1, 500);
-    this.#addRange(document.querySelector("#nameLast"), -1, 60);
+    this.#addRange(document.querySelector("#hiddenName"), -50, 100);
+    this.#addRange(document.querySelector("#nameFirst"), -50, 500);
+    this.#addRange(document.querySelector("#nameLast"), -50, 60);
     this.#addRange(document.querySelector("#introPage"), 0, 500);
     this.#addRange(document.querySelector("#sdDefinition"), 585, 710);
     this.#addRange(document.querySelector("#creativityPage"), 820, 1300, "flex");
