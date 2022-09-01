@@ -1,4 +1,5 @@
 import {bookCanvas, BookAnimation} from "./book.js"
+import {pixelsCanvas, PixelsAnimation} from "./pixels.js"
 
 const docElem = document.documentElement;
 const body = document.body;
@@ -50,7 +51,6 @@ class ScrollAnimation {
     const sdDefinition = document.querySelector("#sdDefinition");
     const creativityText = document.querySelector("#creativity");
     const creativityRainbowText = document.querySelector("#creativityRainbow");
-    const pixelsScreen = document.querySelector("#pixels");
 
     const fontSizeAttr = getComputedStyle(body).getPropertyValue("font-size");
 
@@ -259,7 +259,7 @@ class ScrollAnimation {
 
     this.#addAnimation(
       (val) => {
-        pixelsScreen.style.opacity = `${val ** 2}%`;
+        pixelsCanvas.style.opacity = `${val ** 2}%`;
       },
       { 1200: 0, 1300: 100 ** (1 / 2) }
     );
@@ -339,7 +339,6 @@ class Reveal {
     const developerText = document.querySelector("#developerText");
     const psText = document.querySelector("#problemSolvingText");
     const expressingText = document.querySelector("#expressingText");
-    const thinkingImg = document.querySelector("#thinking");
 
     this.#addReveal(heyText, 100, 0);
     this.#addReveal(studentText, 200, 100);
@@ -361,25 +360,71 @@ class Reveal {
   }
 }
 
+class DisplayControl {
+  static #visibleRanges = []
+
+  static #addRange(element, visibleMin, visibleMax, display="block") {
+    this.#visibleRanges.push({
+      element: element,
+      visibleMin: visibleMin,
+      visibleMax: visibleMax,
+      display: display
+    });
+  }
+
+  static addAll() {
+    this.#addRange(bookCanvas, 400, 905);
+    this.#addRange(pixelsCanvas, 1200, 1400);
+    this.#addRange(document.querySelector("#hiddenName"), -1, 100);
+    this.#addRange(document.querySelector("#nameFirst"), -1, 500);
+    this.#addRange(document.querySelector("#nameLast"), -1, 60);
+    this.#addRange(document.querySelector("#introPage"), 0, 500);
+    this.#addRange(document.querySelector("#sdDefinition"), 585, 710);
+    this.#addRange(document.querySelector("#creativityPage"), 820, 1300, "flex");
+  }
+
+  static displayAll() {
+    for (let range of this.#visibleRanges) {
+      range.element.style.display = range.display;;
+    }
+  }
+
+  static updateAll() {
+    const scrollProgress = getScrollProgress();
+
+    for (let range of this.#visibleRanges) {
+      if (scrollProgress > range.visibleMin && scrollProgress < range.visibleMax) {
+        range.element.style.display = range.display;
+      } else {
+        range.element.style.display = "none";
+      }
+    }
+  }
+}
+
 const bookAnimation = new BookAnimation();
 bookAnimation.setSize();
 
 addEventListener("scroll", () => {
   ScrollAnimation.updateAll();
   Reveal.updateAll();
-  if (getScrollProgress() > 400) {
-    bookCanvas.style.display = "block";
-    bookAnimation.anim(getScrollProgress());
+  DisplayControl.updateAll();
+  if (getScrollProgress() > 900) {
+    document.querySelector("#creativityPage").classList.add("bookColour");
   } else {
-    bookCanvas.style.display = "none";
+    document.querySelector("#creativityPage").classList.remove("bookColour");
   }
+  bookAnimation.anim(getScrollProgress());
 });
 
 addEventListener("resize", () => {
+  DisplayControl.displayAll();
   bookAnimation.setSize();
+  ScrollAnimation.addAll();
   ScrollAnimation.addAll();
   ScrollAnimation.updateAll();
   Reveal.updateAll();
+  DisplayControl.updateAll();
 });
 
 window.onload = () => {
@@ -388,4 +433,11 @@ window.onload = () => {
   ScrollAnimation.updateAll();
   Reveal.addAll();
   Reveal.updateAll();
+  new PixelsAnimation();
+  DisplayControl.addAll();
+  DisplayControl.updateAll();
+  document.querySelector("#nameFirst").classList.remove("hidden");
+  document.querySelector("#nameLast").classList.remove("hidden");
+  document.querySelector("#creativityRainbow").classList.remove("hidden");
+  document.querySelector("#introScreen").classList.remove("hidden");
 };

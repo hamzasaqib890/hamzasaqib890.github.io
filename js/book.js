@@ -1,5 +1,5 @@
 export const bookCanvas = document.querySelector("#book");
-export const bookctx = bookCanvas.getContext("2d");
+const bookctx = bookCanvas.getContext("2d");
 
 export class BookAnimation {
   setSize() {

@@ -53,7 +53,6 @@ body {
     }
 }
 
-
 h1 {
     position: absolute;
     color: white;
@@ -80,6 +79,8 @@ h1 {
     width: 100%;
     text-align: center;
     font-size: 300px;
+    user-select: none;
+    line-height: 100%;
 }
 
 @media screen and (max-width: 2050px) {
@@ -138,10 +139,6 @@ h1 {
     }
 }
 
-#hiddenName {
-    line-height: 100%;
-}
-
 #hiddenName h1 {
     position: relative;
     display: inline-block;
@@ -189,6 +186,10 @@ h1 {
     vertical-align: middle;
 }
 
+.bookColour {
+    background-color: #00203F;
+}
+
 .centerFlex {
     display: flex;
     flex-direction: column;
@@ -211,24 +212,29 @@ h1 {
 
 .hidden {
     opacity: 0;
+    user-select: none;
 }
 
 .reveal.floatUp {
     opacity: 0;
     transform: translateY(150px);
+    user-select: none;
 }
 .reveal.fastRight {
     opacity: 0;
     transform: translateX(-80%);
+    user-select: none;
 }
 .reveal.fastLeft {
     opacity: 0;
     transform: translateX(80%);
+    user-select: none;
 }
 
 .reveal.active {
     opacity: 1;
     transform: translate(0);
+    user-select: auto;
     transition: opacity 1s ease, transform 1s ease;
 }
 
@@ -298,11 +304,24 @@ h1 {
     }
 }
 
-#pixels {
-    background-color: black;
-    width: 100%;
-    height: 100%;
+canvas {
+    z-index: -1;
     position: fixed;
     top: 0;
     left: 0;
+    display: none;
+}
+
+#pixels {
+    background-color: black;
+    z-index: 1;
+}
+
+#colors {
+    background: rgb(150, 150, 150);
+    filter: blur(5px);
+}
+
+#book {
+    background-color: black;
 }

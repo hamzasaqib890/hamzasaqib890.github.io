@@ -1,6 +1,5 @@
-const canvas = document.querySelector("#pixels");
-const ctx = canvas.getContext("2d");
-ctx.filter = "blur(1000px)";
+export const pixelsCanvas = document.querySelector("#pixels");
+const pixelsctx = pixelsCanvas.getContext("2d");
 
 function hslToRgb(h, s, l) {
   var r, g, b;
@@ -42,8 +41,8 @@ class Pixel {
   }
 
   draw(horTotalOffset, verTotalOffset, magnifyX, magnifyY) {
-    const y = this.y - scrollY / 4;
-    if (y < -50 || y > canvas.height + 50) {
+    const y = this.y;// - scrollY / 4;
+    if (y < -50 || y > pixelsCanvas.height + 50) {
       return;
     }
 
@@ -51,30 +50,30 @@ class Pixel {
     const length = (1 - Math.min(dist, 250) / 250) * 20 + 6;
 
     if (length === 6) {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x - length / 2, y - length / 2, length, length);
+      pixelsctx.fillStyle = this.color;
+      pixelsctx.fillRect(this.x - length / 2, y - length / 2, length, length);
     } else {
       const horOffset = (1 - dist / 250) * horTotalOffset;
       const verOffset = (1 - dist / 250) * verTotalOffset;
 
       const rgb = hslToRgb(this.hue / 360, 1, 0.5);
 
-      ctx.fillStyle = `hsl(360, 100%, ${(rgb[0] / 255 / 4) * 100 + 25}%)`;
-      ctx.fillRect(
+      pixelsctx.fillStyle = `hsl(360, 100%, ${(rgb[0] / 255 / 4) * 100 + 25}%)`;
+      pixelsctx.fillRect(
         this.x - length / 2 + horOffset,
         y - length / 2 + verOffset,
         length / 3,
         length
       );
-      ctx.fillStyle = `hsl(120, 100%, ${(rgb[1] / 255 / 4) * 100 + 25}%)`;
-      ctx.fillRect(
+      pixelsctx.fillStyle = `hsl(120, 100%, ${(rgb[1] / 255 / 4) * 100 + 25}%)`;
+      pixelsctx.fillRect(
         this.x - length / 2 + length / 3 + horOffset,
         y - length / 2 + verOffset,
         length / 3,
         length
       );
-      ctx.fillStyle = `hsl(240, 100%, ${(rgb[2] / 255 / 4) * 100 + 25}%)`;
-      ctx.fillRect(
+      pixelsctx.fillStyle = `hsl(240, 100%, ${(rgb[2] / 255 / 4) * 100 + 25}%)`;
+      pixelsctx.fillRect(
         this.x - length / 2 + (2 * length) / 3 + horOffset,
         y - length / 2 + verOffset,
         length / 3,
@@ -84,7 +83,7 @@ class Pixel {
   }
 }
 
-class PixelsAnimation {
+export class PixelsAnimation {
   pixelGap = 40;
   pixelArray;
 
@@ -105,33 +104,28 @@ class PixelsAnimation {
     });
 
     this.anim();
-
-    /*addEventListener("mousemove", (e) => {
-      circle.x = e.clientX;
-      circle.y = e.clientY;
-    });*/
   }
 
   setSize() {
-    canvas.height = innerHeight;
-    canvas.width = innerWidth;
+    pixelsCanvas.height = innerHeight;
+    pixelsCanvas.width = innerWidth;
     this.generatePixels();
   }
 
   generatePixels() {
     this.pixelArray = [];
 
-    for (let x = 0; x < canvas.width; x += this.pixelGap) {
-      for (let y = 0; y < canvas.height * 2; y += this.pixelGap) {
+    for (let x = 0; x < pixelsCanvas.width; x += this.pixelGap) {
+      for (let y = 0; y < pixelsCanvas.height; y += this.pixelGap) {
         this.pixelArray.push(new Pixel(x, y, ((x + y) / 10) % 360));
       }
     }
   }
 
   drawBackground() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pixelsctx.clearRect(0, 0, pixelsCanvas.width, pixelsCanvas.height);
 
-    const horTotalOffset = (this.magnify.x - canvas.width / 2) / 15;
+    const horTotalOffset = (this.magnify.x - pixelsCanvas.width / 2) / 15;
     const verTotalOffset = (this.magnify.y - innerHeight / 2) / 15;
 
     for (let pixel of this.pixelArray) {
@@ -146,10 +140,10 @@ class PixelsAnimation {
   }
 
   drawMagnify() {
-    ctx.strokeStyle = "rgb(255, 255, 255)";
-    ctx.lineWidth = this.magnify.width;
-    ctx.beginPath();
-    ctx.arc(
+    pixelsctx.strokeStyle = "rgb(255, 255, 255)";
+    pixelsctx.lineWidth = this.magnify.width;
+    pixelsctx.beginPath();
+    pixelsctx.arc(
       this.magnify.x,
       this.magnify.y,
       this.magnify.radius,
@@ -157,7 +151,7 @@ class PixelsAnimation {
       Math.PI * 2,
       true
     );
-    ctx.stroke();
+    pixelsctx.stroke();
   }
 
   anim() {
@@ -167,5 +161,3 @@ class PixelsAnimation {
     this.drawMagnify();
   }
 }
-
-onload = () => new PixelsAnimation();

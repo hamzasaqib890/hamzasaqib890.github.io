@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hamza Saqib</title>
     <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="introScreen">
-        <div id="introText">
-            <h1 id="heyText" class="reveal floatUp">Hey, I'm&nbsp</h1>
-            <h1 class="hidden" id="hiddenFirstEnd">Hamza</h1>
+    <div id="introScreen" class="hidden">
+        <div id="introPage">
+            <div id="introText">
+                <h1 id="heyText" class="reveal floatUp">Hey, I'm&nbsp</h1>
+                <h1 class="hidden" id="hiddenFirstEnd">Hamza</h1>
+            </div>
+            <div id="studentText" class="reveal floatUp">
+                <h1>A Computer Science student at the <img id="uwlogo" src="/images/uw_logo_white.png" alt=""></h1>
+            </div>
+            <h1 id="developerText" class="reveal floatUp">and a Software Developer</h1>
         </div>
-        <div id="studentText" class="reveal floatUp">
-            <h1>A Computer Science student at the <img id="uwlogo" src="/images/uw_logo_white.png" alt=""></h1>
-        </div>
-        <h1 id="developerText" class="reveal floatUp">and a Software Developer</h1>
         <canvas id="book">
             <h1>Please use a browser that supports the Canvas API</h1>
         </canvas>
@@ -32,7 +33,7 @@
             </div>
             <h2 id="definition">1. An organism that converts caffeine and pizza into software.</h2>
         </div>
-        <div class="centerFlex">
+        <div id="creativityPage" class="centerFlex">
             <h1 id="problemSolvingText" class="reveal fastRight">I love solving problems <img id="thinking" src="/images/thinking.png" alt=""></h1>
             <div id="creativityText">
                 <h1 id="expressingText" class="reveal fastLeft">and expressing my&nbsp</h1>
@@ -44,11 +45,12 @@
         <h1 id="hiddenFirstStart">Hamza</h1>
         <h1 id="hiddenLastStart">Saqib</h1>
     </div>
-    <h1 id="nameFirst">Hamza</h1>
-    <h1 id="nameLast">Saqib</h1>
-    <h1 id="creativityRainbow" class="rainbowAnimated">creativity</h1>
-    <div id="pixels">
-    </div>
+    <h1 id="nameFirst" class="hidden">Hamza</h1>
+    <h1 id="nameLast" class="hidden">Saqib</h1>
+    <h1 id="creativityRainbow" class="rainbowAnimated hidden">creativity</h1>
+    <canvas id="pixels">
+        <h1>Please use a browser that supports the Canvas API</h1>
+    </canvas>
     <script type="module" src="/js/home.js"></script>
 </body>
 </html>
