@@ -41,7 +41,8 @@ class Pixel {
   }
 
   draw(horTotalOffset, verTotalOffset, magnifyX, magnifyY) {
-    const y = this.y;// - scrollY / 4;
+    const y = this.y + 1300 - scrollY/5;
+    //const y = this.y
     if (y < -50 || y > pixelsCanvas.height + 50) {
       return;
     }
@@ -116,8 +117,8 @@ export class PixelsAnimation {
     this.pixelArray = [];
 
     for (let x = 0; x < pixelsCanvas.width; x += this.pixelGap) {
-      for (let y = 0; y < pixelsCanvas.height; y += this.pixelGap) {
-        this.pixelArray.push(new Pixel(x, y, ((x + y) / 10) % 360));
+      for (let y = 0; y < pixelsCanvas.height * 4; y += this.pixelGap) {
+        this.pixelArray.push(new Pixel(x, y, ((x) / 10) % 360));
       }
     }
   }

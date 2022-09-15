@@ -48,9 +48,11 @@ class ScrollAnimation {
     const studentText = document.querySelector("#studentText");
     const uwlogo = document.querySelector("#uwlogo");
     const developerText = document.querySelector("#developerText");
+    const socials = document.querySelector("#introSocials");
     const sdDefinition = document.querySelector("#sdDefinition");
     const creativityText = document.querySelector("#creativity");
     const creativityRainbowText = document.querySelector("#creativityRainbow");
+    const opportunitiesText = document.querySelector("#opportunitiesText");
 
     const fontSizeAttr = getComputedStyle(body).getPropertyValue("font-size");
 
@@ -179,6 +181,16 @@ class ScrollAnimation {
       }
     );
 
+    this.#addAnimation(
+      (val) => {
+        socials.style.bottom = `${val}px`;
+      },
+      {
+        400: 20,
+        500: innerHeight + 20,
+      }
+    );
+
     sdDefinition.style.top = `${bookCanvas.height / 5}px`;
     sdDefinition.style.left = `${Math.max(bookCanvas.width - bookCanvas.height, 0)}px`;
     sdDefinition.style.width = `${
@@ -207,11 +219,6 @@ class ScrollAnimation {
 
     this.#addAnimation(
       (val) => {
-        if (getScrollProgress() < 900) {
-          creativityRainbowText.style.display = "none";
-          return;
-        }
-        creativityRainbowText.style.display = "block";
         creativityRainbowText.style.opacity = `${val}%`;
       },
       {
@@ -262,6 +269,13 @@ class ScrollAnimation {
         pixelsCanvas.style.opacity = `${val ** 2}%`;
       },
       { 1200: 0, 1300: 100 ** (1 / 2) }
+    );
+
+    this.#addAnimation(
+      (val) => {
+        opportunitiesText.style.top = `${val}%`;
+      },
+      { 1350: 40, 1600: 0 }
     );
   }
 
@@ -325,11 +339,12 @@ class ScrollAnimation {
 class Reveal {
   static #reveals = [];
 
-  static #addReveal(element, appear, disappear) {
+  static #addReveal(element, appear, disappear, className="active") {
     this.#reveals.push({
       element: element,
       appear: appear,
       disappear: disappear,
+      className: className
     });
   }
 
@@ -339,12 +354,23 @@ class Reveal {
     const developerText = document.querySelector("#developerText");
     const psText = document.querySelector("#problemSolvingText");
     const expressingText = document.querySelector("#expressingText");
+    const opportunitiesText = document.querySelector("#opportunitiesText");
+    const timeline = document.querySelector(".timeline");
+    const contents = document.querySelectorAll(".content");
+    const containers = document.querySelectorAll(".container");
 
     this.#addReveal(heyText, 100, 0);
     this.#addReveal(studentText, 200, 100);
     this.#addReveal(developerText, 300, 175);
     this.#addReveal(psText, 850, 820);
     this.#addReveal(expressingText, 850, 820);
+    this.#addReveal(opportunitiesText, 1350, 1300);
+    this.#addReveal(timeline, 1600, 1600);
+    for (let i = 0; i < 4; i++) {
+      this.#addReveal(containers[i], 1600 + i * 100, 1600)
+      this.#addReveal(containers[i], 2100, 2100, "hidden")
+      this.#addReveal(contents[i], 1600 + i * 100, 1600)
+    }
   }
 
   static updateAll() {
@@ -352,9 +378,9 @@ class Reveal {
 
     for (let reveal of this.#reveals) {
       if (scrollProgress >= reveal.appear) {
-        reveal.element.classList.add("active");
+        reveal.element.classList.add(reveal.className);
       } else if (scrollProgress <= reveal.disappear) {
-        reveal.element.classList.remove("active");
+        reveal.element.classList.remove(reveal.className);
       }
     }
   }
@@ -374,13 +400,16 @@ class DisplayControl {
 
   static addAll() {
     this.#addRange(bookCanvas, 400, 905);
-    this.#addRange(pixelsCanvas, 1200, 1400);
+    this.#addRange(pixelsCanvas, 1200, 2500);
     this.#addRange(document.querySelector("#hiddenName"), -50, 100);
     this.#addRange(document.querySelector("#nameFirst"), -50, 500);
     this.#addRange(document.querySelector("#nameLast"), -50, 60);
     this.#addRange(document.querySelector("#introPage"), 0, 500);
     this.#addRange(document.querySelector("#sdDefinition"), 585, 710);
     this.#addRange(document.querySelector("#creativityPage"), 820, 1300, "flex");
+    this.#addRange(document.querySelector("#creativityRainbow"), 900, 1300);
+    this.#addRange(document.querySelector("#opportunitiesText"), 1300, 2500);
+    this.#addRange(document.querySelector(".timeline"), 1500, 2500, "flex");
   }
 
   static displayAll() {
@@ -414,6 +443,16 @@ addEventListener("scroll", () => {
   } else {
     document.querySelector("#creativityPage").classList.remove("bookColour");
   }
+  if (getScrollProgress() > 2100) {
+    document.querySelector("#content4").classList.add("expand");
+  } else {
+    document.querySelector("#content4").classList.remove("expand");
+  }
+  if (getScrollProgress() > 2100) {
+    document.querySelector(".timeline").classList.add("hidden");
+  } else {
+    document.querySelector(".timeline").classList.remove("hidden");
+  }
   bookAnimation.anim(getScrollProgress());
 });
 
@@ -436,6 +475,10 @@ window.onload = () => {
   new PixelsAnimation();
   DisplayControl.addAll();
   DisplayControl.updateAll();
+  document.querySelector("#returnTop").addEventListener("click", () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  })
   document.querySelector("#nameFirst").classList.remove("hidden");
   document.querySelector("#nameLast").classList.remove("hidden");
   document.querySelector("#creativityRainbow").classList.remove("hidden");

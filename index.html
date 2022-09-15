@@ -12,6 +12,17 @@
 </head>
 <body>
     <div id="introScreen" class="hidden">
+        <div id="introSocials" class="socials">
+            <a href="https://www.linkedin.com/in/hamza-saqib1/" target="_blank">
+                <img src="images/linkedin_logo.png" alt="">
+            </a>
+            <a href="https://github.com/hamzasaqib890" target="_blank">
+                <img src="images/github_logo.png" alt="">
+            </a>
+            <a href="mailto:hamza.saqib890@gmail.com">
+                <img src="images/email.png" alt="">
+            </a>
+        </div>
         <div id="introPage">
             <div id="introText">
                 <h1 id="heyText" class="reveal floatUp">Hey, I'm&nbsp</h1>
@@ -40,6 +51,76 @@
                 <h1 id="creativity" class="hidden">creativity</h1>
             </div>
         </div>
+        <h1 id="creativityRainbow" class="rainbowAnimated hidden">creativity</h1>
+        <canvas id="pixels">
+            <h1>Please use a browser that supports the Canvas API</h1>
+        </canvas>
+        <h1 id="opportunitiesText" class="wordByWord floatUp">
+            <span>I'm</span>
+            <span>always</span>
+            <span>looking</span>
+            <span>for</span>
+            <span>new</span>
+            <span>opportunities</span>
+        </h1>
+        <div class="timeline">
+            <div id="container1" class="container">
+                <div id="content1" class="content top">
+                    <img class="logo" src="images/SAP_logo.png">
+                    <div class="info">
+                        <p class="position">Quality Engineering Automation Developer</p>
+                        <p class="timeRange">Jan - Apr 2021</p>
+                    </div>
+                </div>
+            </div>
+            <div id="container2" class="container">
+                <div id="content2" class="content bottom">
+                    <img class="logo" src="images/ps_logo.png">
+                    <div class="info">
+                        <p class="position">Software Developer in Test</p>
+                        <p class="timeRange">Sep - Dec 2021</p>
+                    </div>
+                </div>
+            </div>
+            <div id="container3" class="container">
+                <div id="content3" class="content top">
+                    <img class="logo" src="images/newton_logo.png">
+                    <div class="info">
+                        <p class="position">Software Developer</p>
+                        <p class="timeRange">May - Aug 2021</p>
+                    </div>
+                </div>
+            </div>
+            <div id="container4" class="container">
+            </div>
+            <div id="content4" class="content bottom">
+                <p id="questionMark">?</p>
+                <div class="resume expanded">
+                    <p class="resumeText">Resume</p>
+                    <a href="/resume.pdf" target="_blank">
+                        <img src="images/resume.png" alt="" class="resumeThumbnail">
+                    </a>
+                </div>
+                <div class="contact expanded">
+                    <p>Contact me</p>
+                    <div class="socials">
+                        <a href="https://www.linkedin.com/in/hamza-saqib1/" target="_blank">
+                            <img src="images/linkedin_logo.png" alt="">
+                        </a>
+                        <a href="https://github.com/hamzasaqib890" target="_blank">
+                            <img src="images/github_logo.png" alt="">
+                        </a>
+                        <a href="mailto:hamza.saqib890@gmail.com">
+                            <img src="images/email.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div id="returnTop" class="expanded">
+                    <p >Return to top</p>
+                    <img src="images/up_arrows.png" alt="" id="upArrows" class="pulse">
+                </div>
+            </div>
+        </div>
     </div>
     <div id="hiddenName" class="hidden">
         <h1 id="hiddenFirstStart">Hamza</h1>
@@ -47,10 +128,6 @@
     </div>
     <h1 id="nameFirst" class="hidden">Hamza</h1>
     <h1 id="nameLast" class="hidden">Saqib</h1>
-    <h1 id="creativityRainbow" class="rainbowAnimated hidden">creativity</h1>
-    <canvas id="pixels">
-        <h1>Please use a browser that supports the Canvas API</h1>
-    </canvas>
     <script type="module" src="/js/home.js"></script>
 </body>
 </html>
