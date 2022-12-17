@@ -417,6 +417,7 @@ const bookAnimation = new BookAnimation();
 bookAnimation.setSize();
 
 addEventListener("scroll", () => {
+  console.log(scrollY)
   ScrollAnimation.updateAll();
   Reveal.updateAll();
   DisplayControl.updateAll();
@@ -434,6 +435,11 @@ addEventListener("scroll", () => {
     document.querySelector(".timeline").classList.add("hidden");
   } else {
     document.querySelector(".timeline").classList.remove("hidden");
+  }
+  if (getScrollProgress() > 150) {
+    document.querySelector("#background").classList.add("hidden");
+  } else {
+    document.querySelector("#background").classList.remove("hidden");
   }
   bookAnimation.anim(getScrollProgress());
 });
@@ -464,5 +470,5 @@ window.onload = () => {
   document.querySelector("#nameFirst").classList.remove("hidden");
   document.querySelector("#nameLast").classList.remove("hidden");
   document.querySelector("#creativityRainbow").classList.remove("hidden");
-  document.querySelector("#introScreen").classList.remove("hidden");
+  document.querySelector("#background").classList.remove("hidden");
 };
