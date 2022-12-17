@@ -76,9 +76,11 @@ class ScrollAnimation {
       }
     );
 
+    nameFirst.style.left = `${hiddenFirstStartRect.left}px`;
     this.#addAnimation(
       (val) => {
-        nameFirst.style.left = `${val}px`;
+        nameFirst.style.translateX = val - hiddenFirstStartRect.left;
+        nameFirst.style.translate = `${nameFirst.style.translateX}px ${nameFirst.style.translateY}px`
       },
       {
         0: hiddenFirstStartRect.left,
@@ -98,9 +100,11 @@ class ScrollAnimation {
     );
     nameLast.style.top = `${hiddenLastStartRect.top - 65}px`;
 
+    nameFirst.style.top = `${hiddenFirstStartRect.top - 65}px`
     this.#addAnimation(
       (val) => {
-        nameFirst.style.top = `${val}px`;
+        nameFirst.style.translateY = val - (hiddenFirstStartRect.top - 65);
+        nameFirst.style.translate = `${nameFirst.style.translateX}px ${nameFirst.style.translateY}px`
       },
       {
         0: hiddenFirstStartRect.top - 65,
@@ -122,9 +126,10 @@ class ScrollAnimation {
       }
     );
 
+    introText.style.top = `${introScreen.clientHeight}px`
     this.#addAnimation(
       (val) => {
-        introText.style.top = `${val}px`;
+        introText.style.translate= `0 ${val - introScreen.clientHeight}px`;
       },
       {
         0: introScreen.clientHeight,
@@ -147,9 +152,10 @@ class ScrollAnimation {
     );
 
     uwlogo.style.height = `${hiddenFirstEndRect.height}px`;
+    studentText.style.top = `${introScreen.clientHeight}px`;
     this.#addAnimation(
       (val) => {
-        studentText.style.top = `${val}px`;
+        studentText.style.translate = `0 ${val - introScreen.clientHeight}px`;
       },
       {
         150: introScreen.clientHeight,
@@ -159,9 +165,10 @@ class ScrollAnimation {
       }
     );
 
+    developerText.style.top = `${introScreen.clientHeight}px`
     this.#addAnimation(
       (val) => {
-        developerText.style.top = `${val}px`;
+        developerText.style.translate = `0 ${val - introScreen.clientHeight}px`;
       },
       {
         250: introScreen.clientHeight,
@@ -181,9 +188,10 @@ class ScrollAnimation {
       }
     );
 
+    socials.style.bottom = `${20}px`
     this.#addAnimation(
       (val) => {
-        socials.style.bottom = `${val}px`;
+        socials.style.translate = `0 -${val - 20}px`;
       },
       {
         400: 20,
@@ -229,38 +237,11 @@ class ScrollAnimation {
 
     this.#addAnimation(
       (val) => {
-        creativityRainbowText.style.fontSize = `${val ** 4}%`;
+        creativityRainbowText.style.scale = `${val ** 4}`;
       },
       {
-        1100: 100 ** (1 / 4),
-        1300: 10000 ** (1 / 4),
-      }
-    );
-
-    this.#addAnimation(
-      (val) => {
-        creativityRainbowText.style.left = `${
-          val - creativityRainbowText.getBoundingClientRect().width / 2
-        }px`;
-      },
-      {
-        1100:
-          creativityText.getBoundingClientRect().left +
-          creativityText.getBoundingClientRect().width / 2,
-        1300: innerWidth / 2,
-      }
-    );
-    this.#addAnimation(
-      (val) => {
-        creativityRainbowText.style.top = `${
-          val - creativityRainbowText.getBoundingClientRect().height / 2
-        }px`;
-      },
-      {
-        1100:
-          creativityText.getBoundingClientRect().top +
-          creativityText.getBoundingClientRect().height / 2,
-        1300: innerHeight / 2,
+        1100: 1 ** (1 / 4),
+        1300: 150 ** (1 / 4),
       }
     );
 
@@ -271,9 +252,10 @@ class ScrollAnimation {
       { 1200: 0, 1300: 100 ** (1 / 2) }
     );
 
+    opportunitiesText.style.top = `40%`;
     this.#addAnimation(
       (val) => {
-        opportunitiesText.style.top = `${val}%`;
+        opportunitiesText.style.translate = `0 ${(val - 40) / 100 * innerHeight}px`;
       },
       { 1350: 40, 1600: 0 }
     );
