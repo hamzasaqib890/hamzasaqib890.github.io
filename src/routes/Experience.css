@@ -1,0 +1,34 @@
+.card {
+  transform-style: preserve-3d;
+  cursor: pointer;
+  box-shadow: 0 0 2rem theme(colors.cyan.500), 0 0 0.8rem theme(colors.cyan.500),
+    0 0 2.8rem theme(colors.cyan.500), inset 0 0 0.5rem theme(colors.cyan.500);
+}
+
+.card:hover {
+  box-shadow: 0 0 2rem theme(colors.green.500),
+    0 0 0.8rem theme(colors.green.500), 0 0 2.8rem theme(colors.green.500),
+    inset 0 0 0.5rem theme(colors.green.500);
+}
+
+.front0 {
+  transform: translateZ(1px);
+}
+
+.front1 {
+  transform: translateZ(80px) scale(0.8);
+}
+
+.front2 {
+  transform: translateZ(40px) scale(0.9);
+}
+
+.back {
+  position: absolute;
+  transform: translateZ(-40px) rotateY(180deg);
+}
+
+.shadow1 {
+  background: rgb(20, 20, 20);
+  box-shadow: 0 0 40px 50px rgb(20, 20, 20);
+}

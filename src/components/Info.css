@@ -1,0 +1,28 @@
+.uwaterloo {
+  background: linear-gradient(
+      to top,
+      #00000099 30%,
+      theme(colors.green.500/0.5)
+    ),
+    url("/src/assets/uwaterloo.jpeg");
+  background-size: cover;
+  background-position: right;
+}
+
+.fullstack {
+  background: linear-gradient(
+      to bottom,
+      #00000099 30%,
+      theme(colors.cyan.500/0.5)
+    ),
+    url("/src/assets/code.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+.graphics {
+  background: linear-gradient(to top, #00000099 30%, theme(colors.cyan.500/0.5)),
+    url("/src/assets/graphics.jpg");
+  background-size: cover;
+  background-position: center;
+}
