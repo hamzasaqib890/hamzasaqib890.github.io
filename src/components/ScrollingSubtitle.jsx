@@ -57,11 +57,11 @@ const ScrollingSubtitle = ({ scrollY }) => {
    * dynamically generated number of children.
    */
   return (
-    <div className="flex">
+    <div className="hidden md:flex ">
       <motion.div className="flex" style={{ x }}>
         {[...Array(4)].map((_, i) => (
           <span key={i}>
-            <h2 className="text-white text-xl font-extralight m-0 whitespace-pre">
+            <h2 className="text-white text-[3.8vw] font-extralight m-0 whitespace-pre">
               Computer Science Student • Creative Software Developer •{" "}
             </h2>
           </span>

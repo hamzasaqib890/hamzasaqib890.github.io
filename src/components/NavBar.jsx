@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const NavBar = ({ ...props }) => {
   return (
-    <nav {...props} className="w-full h-32 px-24">
+    <nav {...props} className="w-full h-32 px-10 md:px-24">
       <div className="w-full h-full flex items-center justify-center gap-10 max-w-[1536px] m-auto">
         <Link to="/" className="text-lg font-bold text-neutral-200">
           HS

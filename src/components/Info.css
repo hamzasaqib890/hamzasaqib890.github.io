@@ -1,8 +1,8 @@
 .uwaterloo {
   background: linear-gradient(
-      to top,
+      to bottom,
       #00000099 30%,
-      theme(colors.green.500/0.5)
+      theme(colors.green.700/0.7)
     ),
     url("/src/assets/uwaterloo.jpeg");
   background-size: cover;
@@ -21,8 +21,38 @@
 }
 
 .graphics {
-  background: linear-gradient(to top, #00000099 30%, theme(colors.cyan.500/0.5)),
+  background: linear-gradient(
+      to bottom,
+      #00000099 30%,
+      theme(colors.cyan.500/0.5)
+    ),
     url("/src/assets/graphics.jpg");
   background-size: cover;
   background-position: center;
+}
+
+@media (min-width: 640px) {
+  .uwaterloo {
+    background: linear-gradient(
+        to top,
+        #00000099 30%,
+        theme(colors.green.500/0.5)
+      ),
+      url("/src/assets/uwaterloo.jpeg");
+    background-size: cover;
+    background-position: right;
+  }
+}
+
+@media (min-width: 768px) {
+  .graphics {
+    background: linear-gradient(
+        to top,
+        #00000099 30%,
+        theme(colors.cyan.500/0.5)
+      ),
+      url("/src/assets/graphics.jpg");
+    background-size: cover;
+    background-position: center;
+  }
 }
