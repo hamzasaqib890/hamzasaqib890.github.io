@@ -23,16 +23,18 @@ const ExperienceCard = ({
   imgSrc,
   chips,
 }) => {
+  const isMobile = innerWidth < 640;
   const [flip, setFlip] = useState(false);
   return (
-    <motion.div onClick={() => setFlip((prev) => !prev)}>
+    <motion.div onClick={isMobile ? null : () => setFlip((prev) => !prev)}>
       <Tilt
         className=" bg-zinc-800 text-neutral-200 h-[512px] w-[316px] rounded-2xl flex flex-col items-center p-8 card mx-auto"
         perspective={500}
-        scale={1.1}
+        scale={isMobile ? 1 : 1.1}
         tiltReverse={true}
         flipHorizontally={flip}
-        onLeave={() => setFlip(false)}
+        onLeave={isMobile ? null : () => setFlip(false)}
+        tiltEnable={!isMobile}
       >
         <div className="absolute w-full h-1/2 flex justify-center items-center front0">
           <div className="w-24 h-24 rounded-full z-10 shadow1" />

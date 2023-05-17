@@ -49,7 +49,7 @@ const Tabs = () => {
       </div>
       <div className="w-3/4 min-h-[128px] text-center">
         {selected === 2 ? (
-          <ul className=" max-w-full w-fit mx-auto columns-2 text-left gap-36 whitespace-nowrap leading-8">
+          <ul className=" max-w-full w-fit mx-auto columns-1 sm:columns-2 text-left gap-36 whitespace-nowrap leading-8">
             <li>🍔 Cooking</li>
             <li>📈 Investing</li>
             <li>📖 Reading</li>
@@ -88,13 +88,21 @@ const Tabs = () => {
 const About = () => {
   return (
     <section className="w-full bg-[url('/src/assets/low-poly.svg')] bg-cover">
-      <div className="max-w-screen-2xl flex justify-center items-center mx-auto gap-16 p-16 pt-56 pb-80">
-        <Tilt tiltEnable={!isSafari} trackOnWindow={true} tiltReverse={true}>
+      <div className="max-w-screen-2xl flex flex-col lg:flex-row justify-center items-center mx-auto gap-16 px-8 md:px-16 pt-36 pb-56 lg:pt-56 lg:pb-80">
+        <div className="w-full flex lg:hidden flex-col text-neutral-200 gap-5">
+          <h1 className="text-sm font-semibold">About Me</h1>
+          <hr className=" border-t border-solid border-t-green-500" />
+        </div>
+        <Tilt
+          tiltEnable={!isSafari && innerWidth >= 1024}
+          trackOnWindow={true}
+          tiltReverse={true}
+        >
           <img src={portrait} className=" max-w-[456px] rounded-2xl" />
         </Tilt>
         <div className="flex flex-col text-neutral-200 gap-5">
-          <h1 className="text-sm font-semibold">About Me</h1>
-          <hr className=" border-t border-solid border-t-green-500" />
+          <h1 className="text-sm font-semibold hidden lg:block">About Me</h1>
+          <hr className="border-t border-solid border-t-green-500 hidden lg:block" />
           <p className="text-[1rem]">
             I've always been interested in technology growing up. I started
             dabbling in programming at a very tender age and completed my first

@@ -27,8 +27,8 @@ const Contact = () => {
         src={layeredWaves}
         className="min-w-[1800px] w-full object-center absolute bottom-full"
       />
-      <div className="max-w-screen-2xl flex justify-center items-center mx-auto gap-16 p-16 pt-0">
-        <div className="flex flex-col gap-5 w-1/2 max-w-xl justify-start">
+      <div className="max-w-screen-2xl flex flex-col lg:flex-row justify-center items-center mx-auto gap-16 p-8 md:p-16 pt-0">
+        <div className="flex flex-col gap-5 w-full lg:w-1/2 max-w-xl justify-start">
           <h1 className="text-sm font-semibold whitespace-nowrap">
             Get In Touch
           </h1>
@@ -38,7 +38,7 @@ const Contact = () => {
         <form
           method="POST"
           action="https://script.google.com/macros/s/AKfycbw6g8oZCGDEc3wKN3gVBJchqEGMz4qNuTFNgPcq8bNIPIWrs14yvuqyVLauELr3XC6h/exec"
-          className="flex flex-col gap-5 grow text-[1rem]"
+          className="flex flex-col gap-5 grow text-[1rem] w-full max-w-2xl"
           onSubmit={handleSubmit}
           ref={formRef}
         >
